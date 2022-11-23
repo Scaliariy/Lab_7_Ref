@@ -29,21 +29,16 @@ public class Customer {
             throw new RuntimeException("Can't extract withdraw " + currency);
         }
         if (account.getType().isPremium()) {
-            switch (customerType) {
-                case COMPANY -> overdraft(sum, sum * account.overdraftFee() * companyOverdraftDiscount / 2);
-                case PERSON ->
-                    // we are in overdraft
-                        overdraft(sum, sum * account.overdraftFee());
-            }
+            typeCustomerOverdraft(sum, sum * account.overdraftFee() * companyOverdraftDiscount / 2);
         } else {
-            switch (customerType) {
-                case COMPANY ->
-                    // we are in overdraft
-                        overdraft(sum, sum * account.overdraftFee() * companyOverdraftDiscount);
-                case PERSON ->
-                    // we are in overdraft
-                        overdraft(sum, sum * account.overdraftFee());
-            }
+            typeCustomerOverdraft(sum, sum * account.overdraftFee() * companyOverdraftDiscount);
+        }
+    }
+
+    private void typeCustomerOverdraft(double sum, double sum1) {
+        switch (customerType) {
+            case COMPANY -> overdraft(sum, sum1);
+            case PERSON -> overdraft(sum, sum * account.overdraftFee());
         }
     }
 
