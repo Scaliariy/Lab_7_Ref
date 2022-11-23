@@ -10,7 +10,7 @@ public class Account {
 
     private String currency;
 
-    private Customer customer;
+    Customer customer;
 
     public Account(AccountType type, int daysOverdrawn) {
         super();
@@ -77,10 +77,6 @@ public class Account {
         return type;
     }
 
-    public String printCustomer() {
-        return customer.getName() + " " + customer.getEmail();
-    }
-
     public String getCurrency() {
         return currency;
     }
@@ -104,5 +100,11 @@ public class Account {
         } else {
             customer.typeCustomerOverdraft(sum, sum * overdraftFee() * customer.getCompanyOverdraftDiscount());
         }
+    }
+
+    public String printCustomerDaysOverdrawn(Customer customer) {
+        String fullName = customer.getFullName();
+        String accountDescription = "Account: IBAN: " + getIban() + ", Days Overdrawn: " + getDaysOverdrawn();
+        return fullName + accountDescription;
     }
 }
