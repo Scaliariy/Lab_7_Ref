@@ -9,7 +9,7 @@ public class CustomerTest {
     public void testWithdrawPersonWithNormalAccount() throws Exception {
         Account account = getAccountByTypeAndMoney(false, 34.0);
         Customer customer = getPersonCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.account.withdraw(10, "EUR", customer);
         assertThat(account.getMoney(), is(24.0));
     }
 
@@ -17,7 +17,7 @@ public class CustomerTest {
     public void testWithdrawPersonWithNormalAccountAndOverdraft() throws Exception {
         Account account = getAccountByTypeAndMoney(false, -10.0);
         Customer customer = getPersonCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.account.withdraw(10, "EUR", customer);
         assertThat(account.getMoney(), is(-22.0));
     }
 
@@ -25,7 +25,7 @@ public class CustomerTest {
     public void testWithdrawPersonWithPremiumAccount() throws Exception {
         Account account = getAccountByTypeAndMoney(true, 34.0);
         Customer customer = getPersonCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.account.withdraw(10, "EUR", customer);
         assertThat(account.getMoney(), is(24.0));
     }
 
@@ -33,7 +33,7 @@ public class CustomerTest {
     public void testWithdrawPersonWithPremiumAccountAndOverdraft() throws Exception {
         Account account = getAccountByTypeAndMoney(true, -10.0);
         Customer customer = getPersonCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.account.withdraw(10, "EUR", customer);
         assertThat(account.getMoney(), is(-21.0));
     }
 
@@ -41,7 +41,7 @@ public class CustomerTest {
     public void testWithdrawCompanyWithNormalAccount() throws Exception {
         Account account = getAccountByTypeAndMoney(false, 34);
         Customer customer = getCompanyCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.account.withdraw(10, "EUR", customer);
         assertThat(account.getMoney(), is(24.0));
     }
 
@@ -49,7 +49,7 @@ public class CustomerTest {
     public void testWithdrawCompanyWithNormalAccountAndOverdraft() throws Exception {
         Account account = getAccountByTypeAndMoney(false, -10);
         Customer customer = getCompanyCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.account.withdraw(10, "EUR", customer);
         assertThat(account.getMoney(), is(-21.0));
     }
 
@@ -57,7 +57,7 @@ public class CustomerTest {
     public void testWithdrawCompanyWithPremiumAccount() throws Exception {
         Account account = getAccountByTypeAndMoney(true, 34);
         Customer customer = getCompanyCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.account.withdraw(10, "EUR", customer);
         assertThat(account.getMoney(), is(24.0));
     }
 
@@ -65,7 +65,7 @@ public class CustomerTest {
     public void testWithdrawCompanyWithPremiumAccountAndOverdraft() throws Exception {
         Account account = getAccountByTypeAndMoney(true, -10);
         Customer customer = getCompanyCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.account.withdraw(10, "EUR", customer);
         assertThat(account.getMoney(), is(-20.25));
     }
 
@@ -84,13 +84,13 @@ public class CustomerTest {
     @Test
     public void testPrintCustomerAccountNormal() throws Exception {
         Customer customer = getPersonWithAccount(false);
-        assertThat(customer.printCustomerAccount(), is("Account: IBAN: RO023INGB434321431241, Money: 34.0, Account type: normal"));
+        assertThat(customer.account.printCustomerAccount(customer), is("Account: IBAN: RO023INGB434321431241, Money: 34.0, Account type: normal"));
     }
 
     @Test
     public void testPrintCustomerAccountPremium() throws Exception {
         Customer customer = getPersonWithAccount(true);
-        assertThat(customer.printCustomerAccount(), is("Account: IBAN: RO023INGB434321431241, Money: 34.0, Account type: premium"));
+        assertThat(customer.account.printCustomerAccount(customer), is("Account: IBAN: RO023INGB434321431241, Money: 34.0, Account type: premium"));
     }
 
     private Customer getPersonWithAccount(boolean premium) {
@@ -112,17 +112,6 @@ public class CustomerTest {
         return account;
     }
 
-//    private Customer getPersonCustomer(Account account) {
-//        Customer customer = new Customer("danix", "dan", "dan@mail.com", CustomerType.PERSON, account);
-//        account.setCustomer(customer);
-//        return customer;
-//    }
-//
-//    private Customer getCompanyCustomer(Account account) {
-//        Customer customer = new Customer("company", "company@mail.com", account, 0.50);
-//        account.setCustomer(customer);
-//        return customer;
-//    }
     private Customer getPersonCustomer(Account account) {
         PersonCustomer personCustomer = new PersonCustomer("danix", "dan", "dan@mail.com", CustomerType.PERSON, account);
         account.setCustomer(personCustomer);

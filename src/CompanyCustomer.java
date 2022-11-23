@@ -6,4 +6,8 @@ public class CompanyCustomer extends Customer{
         this.setAccount(account);
         this.setCompanyOverdraftDiscount(companyOverdraftDiscount);
     }
+
+    public void typeCustomerOverdraft(double sum, double sum1) {
+        overdraft(sum, sum1);
+    }
 }

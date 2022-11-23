@@ -6,4 +6,8 @@ public class PersonCustomer extends Customer{
         this.setCustomerType(customerType);
         this.setAccount(account);
     }
+
+    public void typeCustomerOverdraft(double sum, double sum1) {
+        overdraft(sum, sum * getAccount().overdraftFee());
+    }
 }

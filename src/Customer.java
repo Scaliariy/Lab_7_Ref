@@ -1,34 +1,16 @@
-public class Customer {
+abstract class Customer {
 
     private String name;
     private String surname;
     private String email;
     private CustomerType customerType;
-    private Account account;
+    Account account;
     private double companyOverdraftDiscount = 1;
 
-    public void withdraw(double sum, String currency) {
-        if (!account.getCurrency().equals(currency)) {
-            throw new RuntimeException("Can't extract withdraw " + currency);
-        }
-        if (account.getType().isPremium()) {
-            typeCustomerOverdraft(sum, sum * account.overdraftFee() * companyOverdraftDiscount / 2);
-        } else {
-            typeCustomerOverdraft(sum, sum * account.overdraftFee() * companyOverdraftDiscount);
-        }
-    }
+    abstract void typeCustomerOverdraft(double sum, double sum1);
 
-    private void typeCustomerOverdraft(double sum, double sum1) {
-        switch (customerType) {
-            case COMPANY -> overdraft(sum, sum1);
-            case PERSON -> overdraft(sum, sum * account.overdraftFee());
-        }
-    }
-
-    private void overdraft(double sum, double sum1) {
-        // we are in overdraft
+    public void overdraft(double sum, double sum1) {
         if (account.getMoney() < 0) {
-            // 50 percent discount for overdraft for premium account
             account.setMoney((account.getMoney() - sum) - sum1);
         } else {
             account.setMoney(account.getMoney() - sum);
@@ -85,12 +67,11 @@ public class Customer {
 
     public String printCustomerDaysOverdrawn() {
         String fullName = getFullName();
-
         String accountDescription = "Account: IBAN: " + account.getIban() + ", Days Overdrawn: " + account.getDaysOverdrawn();
         return fullName + accountDescription;
     }
 
-    private String getFullName() {
+    public String getFullName() {
         return name + " " + surname + " ";
     }
 
@@ -101,8 +82,4 @@ public class Customer {
         return fullName + accountDescription;
     }
 
-    public String printCustomerAccount() {
-        return "Account: IBAN: " + account.getIban() + ", Money: "
-                + account.getMoney() + ", Account type: " + account.getType();
-    }
 }

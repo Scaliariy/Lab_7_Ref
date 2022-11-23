@@ -1,5 +1,5 @@
 public enum CustomerType {
 
     COMPANY,
-    PERSON
+    PERSON,
 }

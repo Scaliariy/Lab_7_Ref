@@ -88,4 +88,21 @@ public class Account {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+    public String printCustomerAccount(Customer customer) {
+        return "Account: IBAN: " + getIban() + ", Money: "
+                + getMoney() + ", Account type: " + getType();
+    }
+
+    public void withdraw(double sum, String currency, Customer customer) {
+        final boolean isPremium = getType().isPremium();
+        if (!getCurrency().equals(currency)) {
+            throw new RuntimeException("Can't extract withdraw " + currency);
+        }
+        if (isPremium) {
+            customer.typeCustomerOverdraft(sum, sum * overdraftFee() * customer.getCompanyOverdraftDiscount() / 2);
+        } else {
+            customer.typeCustomerOverdraft(sum, sum * overdraftFee() * customer.getCompanyOverdraftDiscount());
+        }
+    }
 }
