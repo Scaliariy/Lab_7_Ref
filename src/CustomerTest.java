@@ -112,15 +112,26 @@ public class CustomerTest {
         return account;
     }
 
+//    private Customer getPersonCustomer(Account account) {
+//        Customer customer = new Customer("danix", "dan", "dan@mail.com", CustomerType.PERSON, account);
+//        account.setCustomer(customer);
+//        return customer;
+//    }
+//
+//    private Customer getCompanyCustomer(Account account) {
+//        Customer customer = new Customer("company", "company@mail.com", account, 0.50);
+//        account.setCustomer(customer);
+//        return customer;
+//    }
     private Customer getPersonCustomer(Account account) {
-        Customer customer = new Customer("danix", "dan", "dan@mail.com", CustomerType.PERSON, account);
-        account.setCustomer(customer);
-        return customer;
+        PersonCustomer personCustomer = new PersonCustomer("danix", "dan", "dan@mail.com", CustomerType.PERSON, account);
+        account.setCustomer(personCustomer);
+        return personCustomer;
     }
 
     private Customer getCompanyCustomer(Account account) {
-        Customer customer = new Customer("company", "company@mail.com", account, 0.50);
-        account.setCustomer(customer);
-        return customer;
+        CompanyCustomer companyCustomer = new CompanyCustomer("company", "company@mail.com", account, 0.50);
+        account.setCustomer(companyCustomer);
+        return companyCustomer;
     }
 }

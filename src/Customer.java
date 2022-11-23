@@ -7,23 +7,6 @@ public class Customer {
     private Account account;
     private double companyOverdraftDiscount = 1;
 
-    public Customer(String name, String surname, String email, CustomerType customerType, Account account) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.customerType = customerType;
-        this.account = account;
-    }
-
-    // use only to create companies
-    public Customer(String name, String email, Account account, double companyOverdraftDiscount) {
-        this.name = name;
-        this.email = email;
-        this.customerType = CustomerType.COMPANY;
-        this.account = account;
-        this.companyOverdraftDiscount = companyOverdraftDiscount;
-    }
-
     public void withdraw(double sum, String currency) {
         if (!account.getCurrency().equals(currency)) {
             throw new RuntimeException("Can't extract withdraw " + currency);
@@ -58,6 +41,30 @@ public class Customer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public double getCompanyOverdraftDiscount() {
+        return companyOverdraftDiscount;
+    }
+
+    public void setCompanyOverdraftDiscount(double companyOverdraftDiscount) {
+        this.companyOverdraftDiscount = companyOverdraftDiscount;
     }
 
     public String getEmail() {
