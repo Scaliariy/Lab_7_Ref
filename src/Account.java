@@ -6,7 +6,7 @@ public class Account {
 
     private int daysOverdrawn;
 
-    private double money;
+    private Money money;
 
     private String currency;
 
@@ -58,11 +58,11 @@ public class Account {
     }
 
     public void setMoney(double money) {
-        this.money = money;
+        this.money = new Money(money);
     }
 
     public double getMoney() {
-        return money;
+        return money.getMoney();
     }
 
     public Customer getCustomer() {
