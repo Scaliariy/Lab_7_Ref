@@ -1,18 +1,17 @@
 public class Account {
 
     private String iban;
-
-    private AccountType type;
-
     private int daysOverdrawn;
 
     private Money money;
 
     Customer customer;
 
-    public Account(AccountType type, int daysOverdrawn) {
+    public boolean premium;
+
+    public Account(Boolean type, int daysOverdrawn) {
         super();
-        this.type = type;
+        this.premium = type;
         this.daysOverdrawn = daysOverdrawn;
     }
 
@@ -25,7 +24,7 @@ public class Account {
     }
 
     private double overdraftCharge() {
-        if (type.isPremium()) {
+        if (isPremium()) {
             double result = 10;
             if (getDaysOverdrawn() > 7)
                 result += (getDaysOverdrawn() - 7) * 1.0;
@@ -35,7 +34,7 @@ public class Account {
     }
 
     public double overdraftFee() {
-        if (type.isPremium()) {
+        if (isPremium()) {
             return 0.10;
         } else {
             return 0.20;
@@ -71,8 +70,8 @@ public class Account {
         this.customer = customer;
     }
 
-    public AccountType getType() {
-        return type;
+    public String getType() {
+        return premium ? "premium" : "normal";
     }
 
     public String getCurrency() {
@@ -85,7 +84,7 @@ public class Account {
     }
 
     public void withdraw(double sum, String currency, Customer customer) {
-        final boolean isPremium = getType().isPremium();
+        final boolean isPremium = isPremium();
         if (!getCurrency().equals(currency)) {
             throw new RuntimeException("Can't extract withdraw " + currency);
         }
@@ -100,5 +99,9 @@ public class Account {
         String fullName = customer.getFullName();
         String accountDescription = "Account: IBAN: " + getIban() + ", Days Overdrawn: " + getDaysOverdrawn();
         return fullName + accountDescription;
+    }
+
+    public boolean isPremium() {
+        return premium;
     }
 }
