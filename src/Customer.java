@@ -11,9 +11,9 @@ abstract class Customer {
 
     public void overdraft(double sum, double sum1) {
         if (account.getMoney() < 0) {
-            account.setMoney((account.getMoney() - sum) - sum1);
+            account.setMoney((account.getMoney() - sum) - sum1, account.getCurrency());
         } else {
-            account.setMoney(account.getMoney() - sum);
+            account.setMoney(account.getMoney() - sum, account.getCurrency());
         }
     }
 

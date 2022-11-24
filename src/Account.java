@@ -8,8 +8,6 @@ public class Account {
 
     private Money money;
 
-    private String currency;
-
     Customer customer;
 
     public Account(AccountType type, int daysOverdrawn) {
@@ -57,8 +55,8 @@ public class Account {
         this.iban = iban;
     }
 
-    public void setMoney(double money) {
-        this.money = new Money(money);
+    public void setMoney(double money, String currency) {
+        this.money = new Money(money, currency);
     }
 
     public double getMoney() {
@@ -78,11 +76,7 @@ public class Account {
     }
 
     public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
+        return money.getCurrency();
     }
 
     public String printCustomerAccount(Customer customer) {

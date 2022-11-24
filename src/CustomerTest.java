@@ -98,8 +98,7 @@ public class CustomerTest {
         Account account = new Account(accountType, 9);
         Customer customer = getPersonCustomer(account);
         account.setIban("RO023INGB434321431241");
-        account.setMoney(34.0);
-        account.setCurrency("EUR");
+        account.setMoney(34.0,"EUR");
         return customer;
     }
 
@@ -107,8 +106,7 @@ public class CustomerTest {
         AccountType accountType = new AccountType(premium);
         Account account = new Account(accountType, 9);
         account.setIban("RO023INGB434321431241");
-        account.setMoney(money);
-        account.setCurrency("EUR");
+        account.setMoney(money,"EUR");
         return account;
     }
 
